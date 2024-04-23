@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.10</version>
+        <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
@@ -15,8 +15,10 @@
     <description>demo</description>
     <properties>
         <java.version>17</java.version>
-        <jackson.version>2.13.4</jackson.version>
-        <spring-cloud-gcp-starter-data-datastore.version>4.10.1</spring-cloud-gcp-starter-data-datastore.version>
+        <jackson.version>2.17.0</jackson.version>
+        <spring-cloud-gcp-starter-data-datastore.version>5.1.2</spring-cloud-gcp-starter-data-datastore.version>
+        <spring-cloud-dependencies.version>2023.0.1</spring-cloud-dependencies.version>
+        <spring-boot-dependencies.version>${project.parent.version}</spring-boot-dependencies.version>
     </properties>
     <dependencies>
         <dependency>
@@ -29,11 +31,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>spring-cloud-gcp-starter</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.cloud/spring-cloud-gcp-starter-data-datastore -->
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>spring-cloud-gcp-starter-data-datastore</artifactId>
-            <version>${spring-cloud-gcp-starter-data-datastore.version}</version>
         </dependency>
 
         <dependency>
@@ -42,10 +48,38 @@
             <version>${jackson.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>spring-cloud-gcp-dependencies</artifactId>
+                <version>${spring-cloud-gcp-starter-data-datastore.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom -->
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
@@ -62,6 +96,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>

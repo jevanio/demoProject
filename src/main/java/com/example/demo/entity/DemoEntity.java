@@ -1,12 +1,11 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.cloud.spring.data.datastore.core.mapping.Entity;
 
-@Entity
+@Entity(name = "demo-entity")
 public class DemoEntity {
 
-    private JsonNode node;
+    private transient Pojo pojo;
     private String name;
 
     public String getName() {
@@ -15,13 +14,5 @@ public class DemoEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public JsonNode getNode() {
-        return node;
-    }
-
-    public void setNode(JsonNode node) {
-        this.node = node;
     }
 }
